@@ -1,11 +1,19 @@
 package com.atguigu.sparsearray;
 
+import sun.nio.ch.FileChannelImpl;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+
 /**
  * 稀疏数组
  */
 public class SparseArray {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // 创建一个原始的二维数组 11 * 11
         // 0: 表示没有棋子， 1 表示 黑子 2 表蓝子
         int chessArr1[][] = new int[11][11];
@@ -53,12 +61,24 @@ public class SparseArray {
             }
         }
 
+        FileOutputStream fileOutputStream = new FileOutputStream("sparseArr.txt");
+        FileChannel channel = fileOutputStream.getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(50);
+
         // 输出稀疏数组的形式
         System.out.println();
         System.out.println("得到稀疏数组为~~~~");
         for (int i = 0; i < sparseArr.length; i++) {
             System.out.printf("%d\t%d\t%d\t\n", sparseArr[i][0], sparseArr[i][1], sparseArr[i][2]);
+            String str = sparseArr[i][0] + "," +  sparseArr[i][1] + "," +  sparseArr[i][2] + "\r\n";
+            byteBuffer.put(str.getBytes());
+
         }
+        byteBuffer.flip();
+        channel.write(byteBuffer);
+
+        channel.close();
+        fileOutputStream.close();
         System.out.println();
 
         //将稀疏数组 --》 恢复成 原始的二维数组
