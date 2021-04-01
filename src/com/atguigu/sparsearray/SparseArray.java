@@ -72,7 +72,6 @@ public class SparseArray {
         int chessArr2[][] = new int[sparseArr[0][0]][sparseArr[0][1]];
 
         //2. 在读取稀疏数组后几行的数据(从第二行开始)，并赋给 原始的二维数组 即可
-
         for (int i = 1; i < sparseArr.length; i++) {
             chessArr2[sparseArr[i][0]][sparseArr[i][1]] = sparseArr[i][2];
         }
