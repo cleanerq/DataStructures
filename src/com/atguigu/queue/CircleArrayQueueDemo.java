@@ -130,6 +130,8 @@ class CircleArray {
 		for (int i = front; i < front + size() ; i++) {
 			System.out.printf("arr[%d]=%d\n", i % maxSize, arr[i % maxSize]);
 		}
+
+		System.out.println("有效个数：" + size());
 	}
 	
 	// 求出当前队列有效数据的个数
