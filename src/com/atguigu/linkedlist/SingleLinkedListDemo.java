@@ -264,7 +264,7 @@ class SingleLinkedList {
         HeroNode temp = head;
         boolean flag = false; // 标志是否找到待删除节点的
         while (true) {
-            if (temp.next == null) { //已经到链表的最后
+            if (temp.next == null)  { //已经到链表的最后
                 break;
             }
             if (temp.next.no == no) {
