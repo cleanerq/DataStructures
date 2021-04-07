@@ -5,7 +5,7 @@ public class Josepfu {
     public static void main(String[] args) {
         // 测试一把看看构建环形链表，和遍历是否ok
         CircleSingleLinkedList circleSingleLinkedList = new CircleSingleLinkedList();
-        circleSingleLinkedList.addBoy(5);// 加入5个小孩节点
+        circleSingleLinkedList.addBoy(125);// 加入5个小孩节点
         circleSingleLinkedList.showBoy();
 
         //测试一把小孩出圈是否正确
