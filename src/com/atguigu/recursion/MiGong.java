@@ -24,6 +24,9 @@ public class MiGong {
 //		map[1][2] = 1;
 //		map[2][2] = 1;
 
+        map[2][4] = 1;
+        map[2][5] = 1;
+
         // 输出地图
         System.out.println("地图的情况");
         for (int i = 0; i < 8; i++) {
