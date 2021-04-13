@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+/**
+ * 逆波兰表达式完整版
+ */
 public class ReversePolishMultiCalc {
 
 	 /**
