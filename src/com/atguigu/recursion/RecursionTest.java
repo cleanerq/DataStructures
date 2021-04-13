@@ -5,18 +5,21 @@ public class RecursionTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//通过打印问题，回顾递归调用机制
-		test(4);
+//		test(4);
 		
-		//int res = factorial(3);
-		//System.out.println("res=" + res);
+		int res = factorial(3);
+		System.out.println("res=" + res);
 	}
 	//打印问题. 
 	public static void test(int n) {
 		if (n > 2) {
 			test(n - 1);
-		} //else {
+		}
+//		else {
+			// 使用else时输出 2
+			// 不使用else时输出 2 3 4
 			System.out.println("n=" + n);
-		// }
+//		}
 	}
 	//阶乘问题
 	public static int factorial(int n) {
