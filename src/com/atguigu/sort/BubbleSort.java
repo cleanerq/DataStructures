@@ -19,8 +19,9 @@ public class BubbleSort {
 		
 		//测试一下冒泡排序的速度O(n^2), 给80000个数据，测试
 		//创建要给80000个的随机的数组
-		int[] arr = new int[80000];
-		for(int i =0; i < 80000;i++) {
+		int arrayLength = 80000;
+		int[] arr = new int[arrayLength];
+		for(int i =0; i < arrayLength;i++) {
 			arr[i] = (int)(Math.random() * 8000000); //生成一个[0, 8000000) 数
 		}
 		
