@@ -9,8 +9,8 @@ public class InsertSort {
     public static void main(String[] args) {
 //        int[] arr = {101, 34, 119, 1, -1, 89};
         // 创建要给80000个的随机的数组
-        int[] arr = new int[80000];
-        for (int i = 0; i < 80000; i++) {
+        int[] arr = new int[800000];
+        for (int i = 0; i < 800000; i++) {
             arr[i] = (int) (Math.random() * 8000000); // 生成一个[0, 8000000) 数
         }
 

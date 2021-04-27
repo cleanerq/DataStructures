@@ -10,8 +10,8 @@ public class ShellSort {
 		//int[] arr = { 8, 9, 1, 7, 2, 3, 5, 4, 6, 0 };
 		
 		// 创建要给80000个的随机的数组
-		int[] arr = new int[8000000];
-		for (int i = 0; i < 8000000; i++) {
+		int[] arr = new int[800000];
+		for (int i = 0; i < 800000; i++) {
 			arr[i] = (int) (Math.random() * 8000000); // 生成一个[0, 8000000) 数
 		}
 
@@ -21,7 +21,7 @@ public class ShellSort {
 		String date1Str = simpleDateFormat.format(data1);
 		System.out.println("排序前的时间是=" + date1Str);
 		
-		//shellSort(arr); //交换式
+//		shellSort(arr); //交换式
 		shellSort2(arr);//移位方式
 		
 		Date data2 = new Date();
