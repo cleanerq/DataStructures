@@ -10,19 +10,20 @@ public class TestSort {
         int length = 20;
         int[] sz = new int[length];
         for (int i = 0; i < length; i++) {
-            sz[i] = (int) (Math.random() * 100);
+            sz[i] = (int) (Math.random() * 1000);
         }
-        System.out.println(" 排序前: " + Arrays.toString(sz));
+        System.out.println("排序前: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
-        xSort3(sz);
+        // 冒泡 选择 插入 希尔 排序
+//        xSort3(sz);
         // 快速排序
-//        kSort4(sz, 0, sz.length - 1);
+//        kSort6(sz, 0, sz.length - 1);
         // 归并排序
-//        int temp[] = new int[sz.length];
-//        mergeSort2(sz, 0, sz.length - 1, temp);
+        int temp[] = new int[sz.length];
+        mergeSort3(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
-        System.out.println(" 排序后: " + Arrays.toString(sz));
-        System.out.println(" 经过时间：" + (e - s) + "ms");
+        System.out.println("排序后: " + Arrays.toString(sz));
+        System.out.println("经过时间：" + (e - s) + "ms");
     }
 
     /**
@@ -297,6 +298,7 @@ public class TestSort {
 
     /**
      * 快速排序练习
+     * 左边为基准
      *
      * @param arr
      * @param l
@@ -335,6 +337,7 @@ public class TestSort {
     }
 
     /**
+     * 快速排序练习2
      * 中间值为基准
      *
      * @param arr
@@ -383,7 +386,8 @@ public class TestSort {
     }
 
     /**
-     * 快速排序 中间为基点
+     * 快速排序练习3
+     * 中间为基准
      *
      * @param arr
      * @param left
@@ -426,6 +430,14 @@ public class TestSort {
         }
     }
 
+    /**
+     * 快速排序练习4
+     * 左边值为基准
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
     public static void kSort4(int[] arr, int left, int right) {
         if (left < right) {
             int l = left, r = right;
@@ -455,7 +467,102 @@ public class TestSort {
         }
     }
 
+    /**
+     * 快速排序练习2
+     * 中间值为基准
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort5(int[] arr, int left, int right) {
+        int l = left;
+        int r = right;
+        int m = arr[(left + right) / 2];
 
+        while (l < r) {
+            while (arr[l] < m) {
+                l++;
+            }
+            while (arr[r] > m) {
+                r--;
+            }
+            if (l >= r) {
+                break;
+            }
+            int tmp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = tmp;
+
+            if (l < r && arr[l] == m) {
+                r--;
+            }
+            if (l < r && arr[r] == m) {
+                l++;
+            }
+        }
+
+        if (l == r) {
+            l++;
+            r--;
+        }
+        if (left <= r) {
+            kSort5(arr, left, r);
+        }
+        if (l <= right) {
+            kSort5(arr, l, right);
+        }
+    }
+
+    /**
+     * 快速排序练习6
+     * 左边值为基准
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort6(int[] arr, int left, int right) {
+        int l = left, r = right;
+        int m = arr[l];
+        while (l < r) {
+            while (l < r && arr[r] >= m) {
+                r--;
+            }
+            if (l < r) {
+                arr[l] = arr[r];
+                l++;
+            }
+            while (l < r && arr[l] < m) {
+                l++;
+            }
+            if (l < r) {
+                arr[r] = arr[l];
+                r--;
+            }
+        }
+        if (l == r) {
+            arr[l] = m;
+            l++;
+            r--;
+        }
+        if (left <= r) {
+            kSort6(arr, left, r);
+        }
+        if (l <= right) {
+            kSort6(arr, l, right);
+        }
+    }
+
+
+    /**
+     * 归并排序练习1
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param temp
+     */
     public static void mergeSort(int[] arr, int left, int right, int[] temp) {
         if (left < right) {
             int m = (left + right) / 2; //中间索引
@@ -465,6 +572,15 @@ public class TestSort {
         }
     }
 
+    /**
+     * 归并排序练习1
+     *
+     * @param arr
+     * @param left
+     * @param mid
+     * @param right
+     * @param temp
+     */
     public static void merge(int[] arr, int left, int mid, int right, int[] temp) {
         int i = left;
         int j = mid + 1;
@@ -502,7 +618,7 @@ public class TestSort {
     }
 
     /**
-     * 归并排序
+     * 归并排序练习2
      *
      * @param arr   待排序数组
      * @param left  左边界
@@ -519,7 +635,7 @@ public class TestSort {
     }
 
     /**
-     * 合并
+     * 归并排序练习2
      *
      * @param arr
      * @param left
@@ -558,6 +674,68 @@ public class TestSort {
             arr[i] = temp[n];
             i++;
             n++;
+        }
+    }
+
+    /**
+     * 归并排序练习3
+     *
+     * @param arr   待排序数组
+     * @param left  左边界
+     * @param right 右边界
+     * @param temp  临时数组
+     */
+    public static void mergeSort3(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int m = (left + right) / 2;
+            mergeSort3(arr, left, m, temp);
+            mergeSort3(arr, m + 1, right, temp);
+            merge3(arr, left, m, right, temp);
+        }
+    }
+
+    /**
+     * 归并排序练习3
+     *
+     * @param arr
+     * @param left
+     * @param mid
+     * @param right
+     * @param temp
+     */
+    public static void merge3(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;
+        int j = mid + 1;
+        int idx = 0;
+        while (i <= mid && j <= right) {
+            if (arr[i] < arr[j]) {
+                temp[idx] = arr[i];
+                i++;
+                idx++;
+            } else {
+                temp[idx] = arr[j];
+                j++;
+                idx++;
+            }
+        }
+        while (i <= mid) {
+            temp[idx] = arr[i];
+            i++;
+            idx++;
+        }
+        while (j <= right) {
+            temp[idx] = arr[j];
+            j++;
+            idx++;
+        }
+
+        idx = 0;
+        // 注意不是从0开始拷贝，而是从left开始拷贝
+        i = left;
+        while (i <= right) {
+            arr[i] = temp[idx];
+            idx++;
+            i++;
         }
     }
 }
