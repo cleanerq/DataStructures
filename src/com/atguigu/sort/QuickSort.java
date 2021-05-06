@@ -34,6 +34,8 @@ public class QuickSort {
     /**
      * 以 (l+h)/2 中间值为基准
      *
+     * 1234567
+     *
      * @param arr
      * @param left
      * @param right
