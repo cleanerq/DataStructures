@@ -468,7 +468,7 @@ public class TestSort {
     }
 
     /**
-     * 快速排序练习2
+     * 快速排序练习5
      * 中间值为基准
      *
      * @param arr
