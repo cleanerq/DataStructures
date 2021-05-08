@@ -1,5 +1,6 @@
 package com.atguigu.hashtab;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class HashTabDemo {
@@ -8,6 +9,7 @@ public class HashTabDemo {
 		
 		//创建哈希表
 		HashTab hashTab = new HashTab(7);
+		HashMap map = new HashMap();
 		
 		//写一个简单的菜单
 		String key = "";
