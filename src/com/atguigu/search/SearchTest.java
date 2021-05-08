@@ -1,7 +1,5 @@
 package com.atguigu.search;
 
-import java.util.List;
-
 public class SearchTest {
     public static void main(String[] args) {
 //        int arr[] = {1, 8, 10, 89, 1000, 1000, 1234};
@@ -37,7 +35,7 @@ public class SearchTest {
 
     public static int binarySearch2(int[] arr, int left, int right, int findVal) {
         System.out.println("search...");
-        if (left > right) {
+        if (left > right || findVal < arr[0] || findVal > arr[arr.length - 1]) {
             return -1;
         }
         int m = left + (right - left) * (findVal - arr[left]) / (arr[right] - arr[left]);
