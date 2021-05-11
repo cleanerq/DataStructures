@@ -20,8 +20,8 @@ public class BinaryTreeDemo {
 		binaryTree.setRoot(root);
 		
 		//测试
-//		System.out.println("前序遍历"); // 1,2,3,5,4
-//		binaryTree.preOrder();
+		System.out.println("前序遍历"); // 1,2,3,5,4
+		binaryTree.preOrder();
 		
 		//测试 
 //		System.out.println("中序遍历");
