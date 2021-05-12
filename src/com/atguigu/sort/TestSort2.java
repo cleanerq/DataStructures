@@ -12,12 +12,12 @@ public class TestSort2 {
         System.out.println("≈≈–Ú«∞: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // √∞≈› —°‘Ò ≤Â»Î œ£∂˚ ª˘ ˝ ≈≈–Ú
-        jSort4(sz);
+//        jSort5(sz);
         // øÏÀŸ≈≈–Ú
-//        kSort10(sz, 0, sz.length - 1);
+//        kSort12(sz, 0, sz.length - 1);
         // πÈ≤¢≈≈–Ú
-//        int temp[] = new int[sz.length];
-//        mergeSort3(sz, 0, sz.length - 1, temp);
+        int temp[] = new int[sz.length];
+        mergeSort4(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
         System.out.println("≈≈–Ú∫Û: " + Arrays.toString(sz));
         System.out.println("æ≠π˝ ±º‰£∫" + (e - s) + "ms");
@@ -136,6 +136,54 @@ public class TestSort2 {
         }
     }
 
+    /**
+     * √∞≈›≈≈–Ú¡∑œ∞1
+     *
+     * @param sz
+     */
+    public static void mSort1(int[] sz) {
+        boolean flg = false;
+        for (int i = 0; i < sz.length; i++) {
+            for (int j = 1; j < sz.length - i; j++) {
+                if (sz[j] < sz[j - 1]) {
+                    int tmp = sz[j - 1];
+                    sz[j - 1] = sz[j];
+                    sz[j] = tmp;
+                    flg = true;
+                }
+            }
+            if (!flg) {
+                break;
+            } else {
+                flg = false;
+            }
+        }
+    }
+
+    /**
+     * —°‘Ò≈≈–Ú¡∑œ∞3
+     *
+     * @param sz
+     */
+    public static void sSort3(int[] sz) {
+        int mIdx = 0;
+        int mVal = 0;
+        for (int i = 0; i < sz.length; i++) {
+            mIdx = i;
+            mVal = sz[i];
+            for (int j = i + 1; j < sz.length; j++) {
+                if (sz[j] < mVal) {
+                    mVal = sz[j];
+                    mIdx = j;
+                }
+            }
+            if (mIdx != i) {
+                sz[mIdx] = sz[i];
+                sz[i] = mVal;
+            }
+        }
+    }
+
 
     /**
      * ≤Â»Î≈≈–Ú¡∑œ∞4
@@ -191,6 +239,25 @@ public class TestSort2 {
                 idx--;
             }
             sz[idx + 1] = iVal;
+        }
+    }
+
+    /**
+     * ≤Â»Î≈≈–Ú¡∑œ∞4
+     *
+     * @param sz
+     */
+    public static void cSort7(int[] sz) {
+        int iIdx = 0;
+        int iVal = 0;
+        for (int i = 1; i < sz.length; i++) {
+            iVal = sz[i];
+            iIdx = i - 1;
+            while (iIdx >= 0 && iVal < sz[iIdx]) {
+                sz[iIdx + 1] = sz[iIdx];
+                iIdx--;
+            }
+            sz[iIdx + 1] = iVal;
         }
     }
 
@@ -254,6 +321,27 @@ public class TestSort2 {
                     idx -= gap;
                 }
                 sz[idx + gap] = iVal;
+            }
+        }
+    }
+
+    /**
+     * œ£∂˚≈≈–Ú¡∑œ∞4
+     *
+     * @param sz
+     */
+    public static void xSort7(int[] sz) {
+        int iIdx = 0;
+        int iVal = 0;
+        for (int gap = sz.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < sz.length; i++) {
+                iVal = sz[i];
+                iIdx = i - gap;
+                while (iIdx >= 0 && iVal < sz[iIdx]) {
+                    sz[iIdx + gap] = sz[iIdx];
+                    iIdx -= gap;
+                }
+                sz[iIdx + gap] = iVal;
             }
         }
     }
@@ -515,6 +603,91 @@ public class TestSort2 {
     }
 
     /**
+     * øÏÀŸ≈≈–Ú¡∑œ∞11
+     * ÷–º‰÷µŒ™ª˘◊º
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort11(int[] arr, int left, int right) {
+        int m = arr[(left + right) / 2];
+        int l = left, r = right;
+        while (l < r) {
+            while (arr[l] < m) {
+                l++;
+            }
+            while (arr[r] > m) {
+                r--;
+            }
+            if (l >= r) {
+                break;
+            }
+            int tmp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = tmp;
+
+            if (arr[l] == m) {
+                r--;
+            }
+            if (arr[r] == m) {
+                l++;
+            }
+        }
+        if (l == r) {
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSort11(arr, left, r);
+        }
+        if (l < right) {
+            kSort11(arr, l, right);
+        }
+    }
+
+    /**
+     * øÏÀŸ≈≈–Ú¡∑œ∞12
+     * ◊Û±ﬂ÷µŒ™ª˘◊º
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort12(int[] arr, int left, int right) {
+        int l = left, r = right;
+        int m = arr[l];
+
+        while (l < r) {
+            while (l < r && arr[r] >= m) {
+                r--;
+            }
+            if (l < r) {
+                arr[l] = arr[r];
+                l++;
+            }
+            while (l < r && arr[l] < m) {
+                l++;
+            }
+            if (l < r) {
+                arr[r] = arr[l];
+                r--;
+            }
+        }
+        if (l == r) {
+            arr[l] = m;
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSort12(arr, left, r);
+        }
+        if (l < right) {
+            kSort12(arr, l, right);
+        }
+    }
+
+    /**
      * πÈ≤¢≈≈–Ú¡∑œ∞1
      *
      * @param arr
@@ -756,6 +929,47 @@ public class TestSort2 {
         }
     }
 
+    /**
+     * πÈ≤¢≈≈–Ú¡∑œ∞4
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param temp
+     */
+    public static void mergeSort4(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int m = (left + right) / 2;
+            mergeSort4(arr, left, m, temp);
+            mergeSort4(arr, m + 1, right, temp);
+            mergeSort4(arr, left, m, right, temp);
+        }
+    }
+
+    public static void mergeSort4(int[] arr, int left, int m, int right, int[] temp) {
+        int i = left;
+        int j = m + 1;
+        int idx = 0;
+        while (i <= m && j <= right) {
+            if (arr[i] < arr[j]) {
+                temp[idx++] = arr[i++];
+            } else {
+                temp[idx++] = arr[j++];
+            }
+        }
+        while (i <= m) {
+            temp[idx++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[idx++] = arr[j++];
+        }
+        i = left;
+        idx = 0;
+        while (i <= right) {
+            arr[i++] = temp[idx++];
+        }
+    }
+
 
     /**
      * ª˘ ˝≈≈–Ú¡∑œ∞4
@@ -775,7 +989,7 @@ public class TestSort2 {
         int[] bucketCount = new int[10];
         int idx = 0;
 
-        for (int i = 0, j = 1; i < mBit; i++, j*=10) {
+        for (int i = 0, j = 1; i < mBit; i++, j *= 10) {
             for (int m = 0; m < arr.length; m++) {
                 idx = arr[m] / j % 10;
                 bucket[idx][bucketCount[idx]] = arr[m];
@@ -791,5 +1005,44 @@ public class TestSort2 {
                 bucketCount[m] = 0;
             }
         }
+    }
+
+    /**
+     * ª˘ ˝≈≈–Ú¡∑œ∞5
+     *
+     * @param arr
+     */
+    public static void jSort5(int[] arr) {
+        int mVal = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > mVal) {
+                mVal = arr[i];
+            }
+        }
+
+        int mBit = String.valueOf(mVal).length();
+        int[][] bucket = new int[10][arr.length];
+        int[] bucketCont = new int[10];
+
+        int idx = 0;
+        for (int i = 0, j = 1; i < mBit; i++, j *= 10) {
+            for (int m = 0; m < arr.length; m++) {
+                idx = arr[m] / j % 10;
+                bucket[idx][bucketCont[idx]] = arr[m];
+                bucketCont[idx]++;
+            }
+
+            idx = 0;
+            for (int m = 0; m < bucketCont.length; m++) {
+                if (bucketCont[m] != 0) {
+                    for (int n = 0; n < bucketCont[m]; n++) {
+                        arr[idx++] = bucket[m][n];
+                    }
+                }
+                bucketCont[m] = 0;
+            }
+        }
+
+
     }
 }
