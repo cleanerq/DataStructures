@@ -21,7 +21,12 @@ public class ThreadedBinaryTreeDemo {
         //测试中序线索化
         ThreadedBinaryTree threadedBinaryTree = new ThreadedBinaryTree();
         threadedBinaryTree.setRoot(root);
-        threadedBinaryTree.threadedNodes();
+        // 中序线索化二叉树
+//        threadedBinaryTree.threadedNodes();
+        // 前序线索化二叉树
+//        threadedBinaryTree.threadedNodesQ(root);
+        // 后序
+        threadedBinaryTree.threadedNodesH(root);
 
         //测试: 以10号节点测试
         HeroNode leftNode = node5.getLeft();
@@ -32,8 +37,12 @@ public class ThreadedBinaryTreeDemo {
         //当线索化二叉树后，能在使用原来的遍历方法
         //threadedBinaryTree.infixOrder();
         System.out.println("使用线索化的方式遍历 线索化二叉树");
-        threadedBinaryTree.threadedList(); // 8, 3, 10, 1, 14, 6
-
+        // 8, 3, 10, 1, 14, 6
+//        threadedBinaryTree.threadedList();
+        // {1,3,8,10,6,14}
+//        threadedBinaryTree.threadedListQ();
+        // 后序
+        threadedBinaryTree.threadedListH();
     }
 
 }
@@ -56,7 +65,7 @@ class ThreadedBinaryTree {
         this.threadedNodes(root);
     }
 
-    //遍历线索化二叉树的方法
+    // 中序遍历线索化二叉树的方法
     public void threadedList() {
         //定义一个变量，存储当前遍历的结点，从root开始
         HeroNode node = root;
@@ -78,13 +87,38 @@ class ThreadedBinaryTree {
             }
             //替换这个遍历的结点
             node = node.getRight();
-
         }
     }
 
-    //编写对二叉树进行中序线索化的方法
+    /**
+     * 前序遍历线索二叉树
+     * {1,3,8,10,6,14}
+     */
+    public void threadedListQ() {
+        //定义一个变量，存储当前遍历的结点，从root开始
+        HeroNode node = root;
+        while (node != null) {
+            while (node.getLeftType() == 0) {
+                System.out.println(node);
+                node = node.getLeft();
+            }
+            System.out.println(node);
+            node = node.getRight();
+        }
+    }
 
     /**
+     * 后序遍历线索二叉树
+     * {8,10,3,1,14,6}
+     */
+    public void threadedListH() {
+
+    }
+
+    /**
+     * 编写对二叉树进行中序线索化的方法
+     * 得到的数组{8,3,10,1,14,6}
+     *
      * @param node 就是当前需要线索化的结点
      */
     public void threadedNodes(HeroNode node) {
@@ -120,7 +154,87 @@ class ThreadedBinaryTree {
 
         //(三)在线索化右子树
         threadedNodes(node.getRight());
+    }
 
+    /**
+     * 编写对二叉树进行 前序线索化的方法
+     * 变成数组后{1,3,8,10,6,14}
+     *
+     * @param node 就是当前需要线索化的结点
+     */
+    public void threadedNodesQ(HeroNode node) {
+        //如果node==null, 不能线索化
+        if (node == null) {
+            return;
+        }
+
+        // 1处理当前节点的前驱节点
+        if (node.getLeft() == null) {
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        // 2处理当前节点的后继节点
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        //3 !!! 每处理一个结点后，让当前结点是下一个结点的前驱结点
+        pre = node;
+
+        if (node.getLeftType() != 1) {
+            // 处理左子树
+            threadedNodesQ(node.getLeft());
+        }
+        if (node.getRightType() != 1) {
+            // 处理右子树
+            threadedNodesQ(node.getRight());
+        }
+        // 1处理当前节点的前驱节点
+        if (node.getLeft() == null) {
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        // 2处理当前节点的后继节点
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        //3 !!! 每处理一个结点后，让当前结点是下一个结点的前驱结点
+        pre = node;
+    }
+
+    /**
+     * 编写对二叉树进行 后序线索化的方法
+     * {8,10,3,1,14,6}
+     *
+     * @param node 就是当前需要线索化的结点
+     */
+    public void threadedNodesH(HeroNode node) {
+        if (node == null) {
+            return;
+        }
+
+
+        // 处理左子树
+        threadedNodesQ(node.getLeft());
+
+
+        // 处理右子树
+        threadedNodesQ(node.getRight());
+
+
+        // 1处理当前节点的前驱节点
+        if (node.getLeft() == null) {
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        // 2处理当前节点的后继节点
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        //3 !!! 每处理一个结点后，让当前结点是下一个结点的前驱结点
+        pre = node;
 
     }
 
