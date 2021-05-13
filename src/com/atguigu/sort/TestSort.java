@@ -15,12 +15,12 @@ public class TestSort {
         System.out.println("≈≈–Ú«∞: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // √∞≈› —°‘Ò ≤Â»Î œ£∂˚ ≈≈–Ú
-//        xSort3(sz);
+//        jSort1(sz);
         // øÏÀŸ≈≈–Ú
-//        kSort6(sz, 0, sz.length - 1);
+//        kSort8(sz, 0, sz.length - 1);
         // πÈ≤¢≈≈–Ú
         int temp[] = new int[sz.length];
-        mergeSort3(sz, 0, sz.length - 1, temp);
+        mergeSort4(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
         System.out.println("≈≈–Ú∫Û: " + Arrays.toString(sz));
         System.out.println("æ≠π˝ ±º‰£∫" + (e - s) + "ms");
@@ -175,6 +175,31 @@ public class TestSort {
     }
 
     /**
+     * —°‘Ò≈≈–Ú¡∑œ∞4
+     *
+     * @param sz
+     */
+    public static void sSort4(int[] sz) {
+        int mVal = 0;
+        int mIdx = 0;
+
+        for (int i = 0; i < sz.length; i++) {
+            mIdx = i;
+            mVal = sz[i];
+            for (int j = i + 1; j < sz.length; j++) {
+                if (sz[j] < mVal) {
+                    mVal = sz[j];
+                    mIdx = j;
+                }
+            }
+            if (mIdx != i) {
+                sz[mIdx] = sz[i];
+                sz[i] = mVal;
+            }
+        }
+    }
+
+    /**
      * ≤Â»Î≈≈–Ú
      *
      * @param sz
@@ -224,6 +249,26 @@ public class TestSort {
         for (int i = 1; i < sz.length; i++) {
             iIdx = i - 1;
             iVal = sz[i];
+            while (iIdx >= 0 && iVal < sz[iIdx]) {
+                sz[iIdx + 1] = sz[iIdx];
+                iIdx--;
+            }
+            sz[iIdx + 1] = iVal;
+        }
+    }
+
+    /**
+     * ≤Â»Î≈≈–Ú¡∑œ∞4
+     *
+     * @param sz
+     */
+    public static void cSort4(int[] sz) {
+        int iIdx = 0;
+        int iVal = 0;
+
+        for (int i = 1; i < sz.length; i++) {
+            iVal = sz[i];
+            iIdx = i - 1;
             while (iIdx >= 0 && iVal < sz[iIdx]) {
                 sz[iIdx + 1] = sz[iIdx];
                 iIdx--;
@@ -292,6 +337,28 @@ public class TestSort {
                     inIdx -= gap;
                 }
                 sz[inIdx + gap] = inVal;
+            }
+        }
+    }
+
+    /**
+     * œ£∂˚≈≈–Ú¡∑œ∞4
+     *
+     * @param sz
+     */
+    public static void xSort4(int[] sz) {
+        int iVal = 0;
+        int iIdx = 0;
+
+        for (int gap = sz.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < sz.length; i++) {
+                iVal = sz[i];
+                iIdx = i - gap;
+                while (iIdx >= 0 && iVal < sz[iIdx]) {
+                    sz[iIdx + gap] = sz[iIdx];
+                    iIdx -= gap;
+                }
+                sz[iIdx + gap] = iVal;
             }
         }
     }
@@ -554,6 +621,131 @@ public class TestSort {
         }
     }
 
+    /**
+     * øÏÀŸ≈≈–Ú¡∑œ∞7
+     * ÷–º‰÷µŒ™ª˘◊º
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort7(int[] arr, int left, int right) {
+        int m = arr[(left + right) / 2];
+        int l = left, r = right;
+        while (l < r) {
+            while (arr[l] < m) {
+                l++;
+            }
+            while (arr[r] > m) {
+                r--;
+            }
+            if (l >= r) {
+                break;
+            }
+
+            int tmp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = tmp;
+
+            if (arr[l] == m) {
+                r--;
+            }
+            if (arr[r] == m) {
+                l++;
+            }
+        }
+        if (l == r) {
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSort7(arr, left, r);
+        }
+        if (l < right) {
+            kSort7(arr, l, right);
+        }
+
+    }
+
+    /**
+     * øÏÀŸ≈≈–Ú¡∑œ∞8
+     * ◊Û±ﬂ÷µŒ™ª˘◊º
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort8(int[] arr, int left, int right) {
+        int l = left, r = right;
+        int m = arr[l];
+
+        while (l < r) {
+            while (l < r && arr[r] >= m) {
+                r--;
+            }
+            if (l < r) {
+                arr[l] = arr[r];
+                l++;
+            }
+            while (l < r && arr[l] < m) {
+                l++;
+            }
+            if (l < r) {
+                arr[r] = arr[l];
+                r--;
+            }
+        }
+        if (l == r) {
+            arr[l] = m;
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSort8(arr, left, r);
+        }
+        if (l < right) {
+            kSort8(arr, l, right);
+        }
+    }
+
+    /**
+     * ª˘ ˝≈≈–Ú¡∑œ∞1
+     *
+     * @param arr
+     */
+    public static void jSort1(int[] arr) {
+        int mVal = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > mVal) {
+                mVal = arr[i];
+            }
+        }
+        int mBit = String.valueOf(mVal).length();
+
+        int[][] bucket = new int[10][arr.length];
+        int[] bucketCount = new int[10];
+
+        int idx = 0;
+
+        for (int i = 0, j = 1; i < mBit; i++, j *= 10) {
+            for (int m = 0; m < arr.length; m++) {
+                idx = arr[m] / j % 10;
+                bucket[idx][bucketCount[idx]] = arr[m];
+                bucketCount[idx]++;
+            }
+
+            idx = 0;
+            for (int m = 0; m < bucketCount.length; m++) {
+                if (bucketCount[m] != 0) {
+                    for (int n = 0; n < bucketCount[m]; n++) {
+                        arr[idx++] = bucket[m][n];
+                    }
+                }
+                bucketCount[m] = 0;
+            }
+        }
+    }
+
 
     /**
      * πÈ≤¢≈≈–Ú¡∑œ∞1
@@ -736,6 +928,47 @@ public class TestSort {
             arr[i] = temp[idx];
             idx++;
             i++;
+        }
+    }
+
+    /**
+     * πÈ≤¢≈≈–Ú¡∑œ∞4
+     *
+     * @param arr   ¥˝≈≈–Ú ˝◊È
+     * @param left  ◊Û±ﬂΩÁ
+     * @param right ”“±ﬂΩÁ
+     * @param temp  ¡Ÿ ± ˝◊È
+     */
+    public static void mergeSort4(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int m = (left + right) / 2;
+            mergeSort4(arr, left, m, temp);
+            mergeSort4(arr, m + 1, right, temp);
+            mergeSort4(arr, left, m, right, temp);
+        }
+    }
+
+    public static void mergeSort4(int[] arr, int left, int m, int right, int[] temp) {
+        int i = left, j = m + 1;
+        int idx = 0;
+        while (i <= m && j <= right) {
+            if (arr[i] < arr[j]) {
+                temp[idx++] = arr[i++];
+            } else {
+                temp[idx++] = arr[j++];
+            }
+        }
+        while (i <= m) {
+            temp[idx++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[idx++] = arr[j++];
+        }
+
+        i = left;
+        idx = 0;
+        while (i <= right) {
+            arr[i++] = temp[idx++];
         }
     }
 }
