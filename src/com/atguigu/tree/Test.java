@@ -19,5 +19,8 @@ public class Test {
 		list.add("9");
 		list.add("10");
 		list.add("11");
+
+		int i = 1;
+		System.out.println(i=+ 1);
 	}
 }

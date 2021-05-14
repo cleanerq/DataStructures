@@ -12,12 +12,12 @@ public class TestSort2 {
         System.out.println("排序前: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // 冒泡 选择 插入 希尔 基数 排序
-//        jSort5(sz);
+        heapSort(sz);
         // 快速排序
 //        kSort12(sz, 0, sz.length - 1);
         // 归并排序
-        int temp[] = new int[sz.length];
-        mergeSort4(sz, 0, sz.length - 1, temp);
+//        int temp[] = new int[sz.length];
+//        mergeSort4(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
         System.out.println("排序后: " + Arrays.toString(sz));
         System.out.println("经过时间：" + (e - s) + "ms");
@@ -1042,7 +1042,46 @@ public class TestSort2 {
                 bucketCont[m] = 0;
             }
         }
+    }
 
 
+    /**
+     * 堆排序练习1
+     *
+     * @param arr
+     */
+    public static void heapSort(int arr[]) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            adjustHeap(arr, i, arr.length);
+        }
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int tmp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = tmp;
+            adjustHeap(arr, 0, i);
+        }
+    }
+
+    /**
+     * @param arr    待调整的数组
+     * @param i      非叶子节点在数组中的索引
+     * @param length 要调整的个数
+     */
+    public static void adjustHeap(int arr[], int i, int length) {
+        int tmp = arr[i];
+
+        for (int k = 2 * i + 1; k < length; k = k * 2 + 1) {
+            if (k + 1 < length && arr[k] < arr[k + 1]) {
+                k++;
+            }
+            if (arr[k] > tmp) {
+                arr[i] = arr[k];
+                i = k;
+            } else {
+                break;
+            }
+        }
+
+        arr[i] = tmp;
     }
 }
