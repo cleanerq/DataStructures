@@ -254,6 +254,7 @@ public class HuffmanCode {
         List<Node> nodes = getNodes(bytes);
         //根据 nodes 创建的赫夫曼树
         Node huffmanTreeRoot = createHuffmanTree(nodes);
+//        huffmanTreeRoot.preOrder();
         //对应的赫夫曼编码(根据 赫夫曼树)
         Map<Byte, String> huffmanCodes = getCodes(huffmanTreeRoot);
         //根据生成的赫夫曼编码，压缩得到压缩后的赫夫曼编码字节数组
