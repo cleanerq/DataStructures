@@ -11,13 +11,13 @@ public class TestSort2 {
         }
         System.out.println("排序前: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
-        // 冒泡 选择 插入 希尔 基数 排序
-        jSort6(sz);
+        // 冒泡 选择 插入 希尔 基数 堆排序
+        heapSort3(sz);
         // 快速排序
-//        kSort14(sz, 0, sz.length - 1);
+//        kSort16(sz, 0, sz.length - 1);
         // 归并排序
 //        int temp[] = new int[sz.length];
-//        mergeSort5(sz, 0, sz.length - 1, temp);
+//        mergeSort6(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
         System.out.println("排序后: " + Arrays.toString(sz));
         System.out.println("经过时间：" + (e - s) + "ms");
@@ -137,6 +137,31 @@ public class TestSort2 {
     }
 
     /**
+     * 选择排序练习5
+     *
+     * @param sz
+     */
+    public static void sSort5(int[] sz) {
+        int mIdx = 0;
+        int mVal = 0;
+
+        for (int i = 0; i < sz.length; i++) {
+            mIdx = i;
+            mVal = sz[i];
+            for (int j = i + 1; j < sz.length; j++) {
+                if (sz[j] < mVal) {
+                    mVal = sz[j];
+                    mIdx = j;
+                }
+            }
+            if (mIdx != i) {
+                sz[mIdx] = sz[i];
+                sz[i] = mVal;
+            }
+        }
+    }
+
+    /**
      * 冒泡排序练习1
      *
      * @param sz
@@ -150,6 +175,30 @@ public class TestSort2 {
                     sz[j - 1] = sz[j];
                     sz[j] = tmp;
                     flg = true;
+                }
+            }
+            if (!flg) {
+                break;
+            } else {
+                flg = false;
+            }
+        }
+    }
+
+    /**
+     * 冒泡排序练习2
+     *
+     * @param sz
+     */
+    public static void mSort2(int[] sz) {
+        boolean flg = false;
+        for (int i = 0; i < sz.length; i++) {
+            for (int j = 1; j < sz.length - i; j++) {
+                if (sz[j - 1] > sz[j]) {
+                    flg = true;
+                    int tmp = sz[j];
+                    sz[j] = sz[j - 1];
+                    sz[j - 1] = tmp;
                 }
             }
             if (!flg) {
@@ -306,6 +355,25 @@ public class TestSort2 {
     }
 
     /**
+     * 插入排序练习9
+     *
+     * @param sz
+     */
+    public static void cSort9(int[] sz) {
+        int inVal = 0;
+        int inIdx = 0;
+        for (int i = 1; i < sz.length; i++) {
+            inVal = sz[i];
+            inIdx = i - 1;
+            while (inIdx >= 0 && inVal < sz[inIdx]) {
+                sz[inIdx + 1] = sz[inIdx];
+                inIdx--;
+            }
+            sz[inIdx + 1] = inVal;
+        }
+    }
+
+    /**
      * 希尔排序练习4
      *
      * @param sz
@@ -403,6 +471,28 @@ public class TestSort2 {
             for (int i = gap; i < sz.length; i++) {
                 iIdx = i - gap;
                 iVal = sz[i];
+                while (iIdx >= 0 && iVal < sz[iIdx]) {
+                    sz[iIdx + gap] = sz[iIdx];
+                    iIdx -= gap;
+                }
+                sz[iIdx + gap] = iVal;
+            }
+        }
+    }
+
+    /**
+     * 希尔排序练习9
+     *
+     * @param sz
+     */
+    public static void xSort9(int[] sz) {
+        int iVal = 0;
+        int iIdx = 0;
+
+        for (int gap = sz.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < sz.length; i++) {
+                iVal = sz[i];
+                iIdx = i - gap;
                 while (iIdx >= 0 && iVal < sz[iIdx]) {
                     sz[iIdx + gap] = sz[iIdx];
                     iIdx -= gap;
@@ -837,6 +927,93 @@ public class TestSort2 {
     }
 
     /**
+     * 快速排序练习11
+     * 中间值为基准
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort15(int[] arr, int left, int right) {
+        int l = left, r = right;
+        int m = arr[l + (r - l) / 2];
+        while (l < r) {
+            while (arr[l] < m) {
+                l++;
+            }
+            while (arr[r] > m) {
+                r--;
+            }
+            if (l >= r) {
+                break;
+            }
+            int tmp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = tmp;
+
+            if (arr[l] == m) {
+                r--;
+            }
+            if (arr[r] == m) {
+                l++;
+            }
+        }
+        if (l == r) {
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSort15(arr, left, r);
+        }
+        if (l < right) {
+            kSort15(arr, l, right);
+        }
+    }
+
+    /**
+     * 快速排序练习12
+     * 左边值为基准
+     *
+     * @param arr
+     * @param left
+     * @param right
+     */
+    public static void kSort16(int[] arr, int left, int right) {
+        int l = left, r = right;
+        int m = arr[l];
+
+        while (l < r) {
+            while (l < r && arr[r] >= m) {
+                r--;
+            }
+            if (l < r) {
+                arr[l] = arr[r];
+                l++;
+            }
+
+            while (l < r && arr[l] < m) {
+                l++;
+            }
+            if (l < r) {
+                arr[r] = arr[l];
+                r--;
+            }
+        }
+
+        if (l == r) {
+            arr[l] = m;
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSort16(arr, left, r);
+        }
+        if (l < right) {
+            kSort16(arr, l, right);
+        }
+    }
+
+    /**
      * 归并排序练习1
      *
      * @param arr
@@ -1160,6 +1337,50 @@ public class TestSort2 {
         }
     }
 
+    /**
+     * 归并排序练习6
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param temp
+     */
+    public static void mergeSort6(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int m = left + (right - left) / 2;
+            int l = left, r = right;
+            mergeSort6(arr, l, m, temp);
+            mergeSort6(arr, m + 1, right, temp);
+            mergeSort6(arr, l, m, right, temp);
+        }
+    }
+
+    public static void mergeSort6(int[] arr, int left, int m, int right, int[] temp) {
+        int i = left, j = m + 1;
+        int idx = 0;
+        while (i <= m && j <= right) {
+            if (arr[i] < arr[j]) {
+                temp[idx++] = arr[i++];
+            } else {
+                temp[idx++] = arr[j++];
+            }
+        }
+
+        while (i <= m) {
+            temp[idx++] = arr[i++];
+        }
+
+        while (j <= right) {
+            temp[idx++] = arr[j++];
+        }
+
+        idx = 0;
+        i = left;
+        while (i <= right) {
+            arr[i++] = temp[idx++];
+        }
+    }
+
 
     /**
      * 基数排序练习4
@@ -1271,6 +1492,42 @@ public class TestSort2 {
         }
     }
 
+    /**
+     * 基数排序练习7
+     *
+     * @param arr
+     */
+    public static void jSort7(int[] arr) {
+        int mVal = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > mVal) {
+                mVal = arr[i];
+            }
+        }
+        int mBit = String.valueOf(mVal).length();
+        int[][] bucket = new int[10][arr.length];
+        int[] bucketCount = new int[10];
+        int idx = 0;
+
+        for (int i = 0, j = 1; i < mBit; i++, j *= 10) {
+            for (int m = 0; m < arr.length; m++) {
+                idx = arr[m] / j % 10;
+                bucket[idx][bucketCount[idx]] = arr[m];
+                bucketCount[idx]++;
+            }
+
+            idx = 0;
+            for (int m = 0; m < bucketCount.length; m++) {
+                if (bucketCount[m] > 0) {
+                    for (int n = 0; n < bucketCount[m]; n++) {
+                        arr[idx++] = bucket[m][n];
+                    }
+                }
+                bucketCount[m] = 0;
+            }
+        }
+    }
+
 
     /**
      * 堆排序练习1
@@ -1338,6 +1595,47 @@ public class TestSort2 {
     public static void adjustHeap2(int arr[], int i, int length) {
         int tmp = arr[i];
         for (int j = 2 * i + 1; j < length; j = j * 2 + 1) {
+            if (j + 1 < length && arr[j] < arr[j + 1]) {
+                j++;
+            }
+            if (arr[j] > tmp) {
+                arr[i] = arr[j];
+                i = j;
+            } else {
+                break;
+            }
+        }
+        arr[i] = tmp;
+    }
+
+    /**
+     * 堆排序练习3
+     *
+     * @param arr
+     */
+    public static void heapSort3(int arr[]) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            adjustHeap3(arr, i, arr.length);
+        }
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int tmp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = tmp;
+            adjustHeap3(arr, 0, i);
+        }
+    }
+
+    /**
+     * 堆排序练习3
+     *
+     * @param arr    待调整的数组
+     * @param i      非叶子节点在数组中的索引
+     * @param length 要调整的个数
+     */
+    public static void adjustHeap3(int arr[], int i, int length) {
+        int tmp = arr[i];
+        for (int j = i * 2 + 1; j < length; j = j * 2 + 1) {
             if (j + 1 < length && arr[j] < arr[j + 1]) {
                 j++;
             }
