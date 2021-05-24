@@ -1,17 +1,7 @@
 package com.atguigu.huffmancode;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class HuffmanCode {
 
@@ -26,26 +16,24 @@ public class HuffmanCode {
 
 
         //测试解压文件
-        String zipFile = "d://Uninstall.zip";
-        String dstFile = "d://Uninstall2.xml";
-        unZipFile(zipFile, dstFile);
-        System.out.println("解压成功!");
-		
-		/*
-		String content = "i like like like java do you like a java";
-		byte[] contentBytes = content.getBytes();
-		System.out.println(contentBytes.length); //40
-		
-		byte[] huffmanCodesBytes= huffmanZip(contentBytes);
-		System.out.println("压缩后的结果是:" + Arrays.toString(huffmanCodesBytes) + " 长度= " + huffmanCodesBytes.length);
-		
-		
-		//测试一把byteToBitString方法
-		//System.out.println(byteToBitString((byte)1));
-		byte[] sourceBytes = decode(huffmanCodes, huffmanCodesBytes);
-		
-		System.out.println("原来的字符串=" + new String(sourceBytes)); // "i like like like java do you like a java"
-		*/
+//        String zipFile = "d://Uninstall.zip";
+//        String dstFile = "d://Uninstall2.xml";
+//        unZipFile(zipFile, dstFile);
+//        System.out.println("解压成功!");
+
+        String content = "i like like like java do you like a java";
+        byte[] contentBytes = content.getBytes();
+        System.out.println(contentBytes.length); //40
+
+        byte[] huffmanCodesBytes = huffmanZip(contentBytes);
+        System.out.println("压缩后的结果是:" + Arrays.toString(huffmanCodesBytes) + " 长度= " + huffmanCodesBytes.length);
+
+
+        //测试一把byteToBitString方法
+        //System.out.println(byteToBitString((byte)1));
+        byte[] sourceBytes = decode(huffmanCodes, huffmanCodesBytes);
+
+        System.out.println("原来的字符串=" + new String(sourceBytes)); // "i like like like java do you like a java"
 
 
         //如何将 数据进行解压(解码)
