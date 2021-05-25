@@ -12,7 +12,7 @@ public class TestSort2 {
         System.out.println("ÅÅĞòÇ°: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // Ã°Åİ Ñ¡Ôñ ²åÈë Ï£¶û »ùÊı ¶ÑÅÅĞò
-        heapSort3(sz);
+        heapSort4(sz);
         // ¿ìËÙÅÅĞò
 //        kSort16(sz, 0, sz.length - 1);
         // ¹é²¢ÅÅĞò
@@ -1636,6 +1636,40 @@ public class TestSort2 {
     public static void adjustHeap3(int arr[], int i, int length) {
         int tmp = arr[i];
         for (int j = i * 2 + 1; j < length; j = j * 2 + 1) {
+            if (j + 1 < length && arr[j] < arr[j + 1]) {
+                j++;
+            }
+            if (arr[j] > tmp) {
+                arr[i] = arr[j];
+                i = j;
+            } else {
+                break;
+            }
+        }
+        arr[i] = tmp;
+    }
+
+    /**
+     * ¶ÑÅÅĞòÁ·Ï°4
+     *
+     * @param arr
+     */
+    public static void heapSort4(int arr[]) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            adjustHeap4(arr, i, arr.length);
+        }
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int tmp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = tmp;
+            adjustHeap4(arr, 0, i);
+        }
+    }
+
+    public static void adjustHeap4(int arr[], int i, int length) {
+        int tmp = arr[i];
+        for (int j = 2 * i + 1; j < length; j = j * 2 + 1) {
             if (j + 1 < length && arr[j] < arr[j + 1]) {
                 j++;
             }
