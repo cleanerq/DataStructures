@@ -12,7 +12,7 @@ public class TestSort2 {
         System.out.println("ÅÅĞòÇ°: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // Ã°Åİ Ñ¡Ôñ ²åÈë Ï£¶û »ùÊı ¶ÑÅÅĞò
-        heapSort4(sz);
+        heapSort5(sz);
         // ¿ìËÙÅÅĞò
 //        kSort16(sz, 0, sz.length - 1);
         // ¹é²¢ÅÅĞò
@@ -1676,6 +1676,47 @@ public class TestSort2 {
             if (arr[j] > tmp) {
                 arr[i] = arr[j];
                 i = j;
+            } else {
+                break;
+            }
+        }
+        arr[i] = tmp;
+    }
+
+    /**
+     * ¶ÑÅÅĞòÁ·Ï°5
+     *
+     * @param arr
+     */
+    public static void heapSort5(int arr[]) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            adjustHeap5(arr, i, arr.length);
+        }
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int tmp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = tmp;
+            adjustHeap5(arr, 0, i);
+        }
+    }
+
+    /**
+     * ¶ÑÅÅĞòÁ·Ï°5
+     *
+     * @param arr
+     * @param i
+     * @param length
+     */
+    public static void adjustHeap5(int arr[], int i, int length) {
+        int tmp = arr[i];
+        for (int m = 2 * i + 1; m < length; m = m * 2 + 1) {
+            if (m + 1 < length && arr[m] < arr[m + 1]) {
+                m++;
+            }
+            if (arr[m] > tmp) {
+                arr[i] = arr[m];
+                i = m;
             } else {
                 break;
             }
