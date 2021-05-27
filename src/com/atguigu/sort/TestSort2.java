@@ -12,7 +12,7 @@ public class TestSort2 {
         System.out.println("≈≈–Ú«∞: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // √∞≈› —°‘Ò ≤Â»Î œ£∂˚ ª˘ ˝ ∂—≈≈–Ú
-        heapSort5(sz);
+        jSort8(sz);
         // øÏÀŸ≈≈–Ú
 //        kSort16(sz, 0, sz.length - 1);
         // πÈ≤¢≈≈–Ú
@@ -1528,6 +1528,42 @@ public class TestSort2 {
         }
     }
 
+    /**
+     * ª˘ ˝≈≈–Ú¡∑œ∞8
+     *
+     * @param arr
+     */
+    public static void jSort8(int[] arr) {
+        int mVal = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > mVal) {
+                mVal = arr[i];
+            }
+        }
+
+        int mBit = String.valueOf(mVal).length();
+        int[][] bucket = new int[10][arr.length];
+        int[] bucketCount = new int[10];
+
+        int idx = 0;
+        for (int i = 0, j = 1; i < mBit; i++, j *= 10) {
+            for (int m = 0; m < arr.length; m++) {
+                idx = arr[m] / j % 10;
+                bucket[idx][bucketCount[idx]] = arr[m];
+                bucketCount[idx]++;
+            }
+            idx = 0;
+            for (int n = 0; n < bucketCount.length; n++) {
+                if (bucketCount[n] > 0) {
+                    for (int m = 0; m < bucketCount[n]; m++) {
+                        arr[idx++] = bucket[n][m];
+                    }
+                }
+                bucketCount[n] = 0;
+            }
+        }
+    }
+
 
     /**
      * ∂—≈≈–Ú¡∑œ∞1
@@ -1717,6 +1753,40 @@ public class TestSort2 {
             if (arr[m] > tmp) {
                 arr[i] = arr[m];
                 i = m;
+            } else {
+                break;
+            }
+        }
+        arr[i] = tmp;
+    }
+
+    /**
+     * ∂—≈≈–Ú¡∑œ∞6
+     *
+     * @param arr
+     */
+    public static void heapSort6(int arr[]) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            heapSort6(arr, i, arr.length);
+        }
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int tmp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = tmp;
+            heapSort6(arr, 0, i);
+        }
+    }
+
+    public static void heapSort6(int arr[], int i, int length) {
+        int tmp = arr[i];
+        for (int j = 2 * i + 1; j < length; j = j * 2 + 1) {
+            if (j + 1 < length && arr[j] < arr[j + 1]) {
+                j++;
+            }
+            if (arr[j] > tmp) {
+                arr[i] = arr[j];
+                i = j;
             } else {
                 break;
             }
