@@ -12,13 +12,13 @@ public class TestSort3 {
         }
         System.out.println("排序前: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
-        // 冒泡 选择 插入 希尔 基数
-        dSort1(sz);
+        // 冒泡 选择 插入 希尔 基数 堆
+//        dSort1(sz);
         // 快速
-//        kSort8(sz, 0, sz.length - 1);
-        // 归并 堆
-//        int temp[] = new int[sz.length];
-//        mergeSort(sz, 0, sz.length - 1, temp);
+//        kSortL1(sz, 0, sz.length - 1);
+        // 归并
+        int temp[] = new int[sz.length];
+        gSort1(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
         System.out.println("排序后: " + Arrays.toString(sz));
         System.out.println("经过时间：" + (e - s) + "ms");
@@ -182,6 +182,132 @@ public class TestSort3 {
             }
         }
         sz[idx] = tmp;
+    }
+
+    /**
+     * 快速排序1
+     * 中间
+     *
+     * @param sz
+     * @param left
+     * @param right
+     */
+    public static void kSortM1(int[] sz, int left, int right) {
+        int l = left, r = right;
+        int m = sz[l + (r - l) / 2];
+        while (l < r) {
+            while (sz[l] < m) {
+                l++;
+            }
+            while (sz[r] > m) {
+                r--;
+            }
+            if (l >= r) {
+                break;
+            }
+            int tmp = sz[l];
+            sz[l] = sz[r];
+            sz[r] = tmp;
+            if (sz[l] == m) {
+                r--;
+            }
+            if (sz[r] == m) {
+                l++;
+            }
+        }
+        if (l == r) {
+            l++;
+            r--;
+        }
+        if (l < right) {
+            kSortM1(sz, l, right);
+        }
+        if (left < r) {
+            kSortM1(sz, left, r);
+        }
+    }
+
+    /**
+     * 快速排序1
+     * 左边
+     *
+     * @param sz
+     * @param left
+     * @param right
+     */
+    public static void kSortL1(int[] sz, int left, int right) {
+        int l = left, r = right;
+        int m = sz[l];
+
+        while (l < r) {
+            while (l < r && sz[r] >= m) {
+                r--;
+            }
+            if (l < r) {
+                sz[l] = sz[r];
+                l++;
+            }
+            while (l < r && sz[l] < m) {
+                l++;
+            }
+            if (l < r) {
+                sz[r] = sz[l];
+                r--;
+            }
+        }
+        if (l == r) {
+            sz[l] = m;
+            l++;
+            r--;
+        }
+        if (l < right) {
+            kSortL1(sz, l, right);
+        }
+        if (left < r) {
+            kSortL1(sz, left, r);
+        }
+    }
+
+    /**
+     * 归并练习1
+     *
+     * @param sz
+     * @param left
+     * @param right
+     * @param tmp
+     */
+    public static void gSort1(int[] sz, int left, int right, int[] tmp) {
+        if (left < right) {
+            int m = left + (right - left) / 2;
+            gSort1(sz, left, m, tmp);
+            gSort1(sz, m + 1, right, tmp);
+            gSort1(sz, left, m, right, tmp);
+        }
+    }
+
+    public static void gSort1(int[] sz, int left, int m, int right, int[] tmp) {
+        int i = left;
+        int j = m + 1;
+        int idx = 0;
+
+        while (i <= m && j <= right) {
+            if (sz[i] < sz[j]) {
+                tmp[idx++] = sz[i++];
+            } else {
+                tmp[idx++] = sz[j++];
+            }
+        }
+        while (i <= m) {
+            tmp[idx++] = sz[i++];
+        }
+        while (j <= right) {
+            tmp[idx++] = sz[j++];
+        }
+        idx = 0;
+        i = left;
+        while (i <= right) {
+            sz[i++] = tmp[idx++];
+        }
     }
 }
 
