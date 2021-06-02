@@ -13,12 +13,12 @@ public class TestSort3 {
         System.out.println("排序前: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // 冒泡 选择 插入 希尔 基数 堆
-//        dSort1(sz);
+        dSort2(sz);
         // 快速
 //        kSortL1(sz, 0, sz.length - 1);
         // 归并
-        int temp[] = new int[sz.length];
-        gSort1(sz, 0, sz.length - 1, temp);
+//        int temp[] = new int[sz.length];
+//        gSort2(sz, 0, sz.length - 1, temp);
         long e = System.currentTimeMillis();
         System.out.println("排序后: " + Arrays.toString(sz));
         System.out.println("经过时间：" + (e - s) + "ms");
@@ -185,6 +185,42 @@ public class TestSort3 {
     }
 
     /**
+     * 堆排序1
+     *
+     * @param sz
+     */
+    public static void dSort2(int[] sz) {
+        for (int i = sz.length / 2 - 1; i >= 0; i--) {
+            dSort2(sz, i, sz.length);
+        }
+
+        for (int i = sz.length - 1; i >= 0; i--) {
+            int tmp = sz[i];
+            sz[i] = sz[0];
+            sz[0] = tmp;
+
+            dSort2(sz, 0, i);
+        }
+    }
+
+    public static void dSort2(int[] sz, int i, int length) {
+        int tmp = sz[i];
+        for (int k = 2 * i + 1; k < length; k = k * 2 + 1) {
+            if (k + 1 < length && sz[k] < sz[k + 1]) {
+                k++;
+            }
+            if (sz[k] > tmp) {
+                sz[i] = sz[k];
+                i = k;
+            } else {
+                break;
+            }
+        }
+        sz[i] = tmp;
+    }
+
+
+    /**
      * 快速排序1
      * 中间
      *
@@ -305,6 +341,50 @@ public class TestSort3 {
         }
         idx = 0;
         i = left;
+        while (i <= right) {
+            sz[i++] = tmp[idx++];
+        }
+    }
+
+    /**
+     * 归并排序2
+     *
+     * @param sz
+     * @param left
+     * @param right
+     * @param tmp
+     */
+    public static void gSort2(int[] sz, int left, int right, int[] tmp) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            gSort2(sz, left, mid, tmp);
+            gSort2(sz, mid + 1, right, tmp);
+            gSort2(sz, left, mid, right, tmp);
+        }
+    }
+
+    public static void gSort2(int[] sz, int left, int mid, int right, int[] tmp) {
+        int i = left, j = mid + 1;
+        int idx = 0;
+
+        while (i <= mid && j <= right) {
+            if (sz[i] < sz[j]) {
+                tmp[idx++] = sz[i++];
+            } else {
+                tmp[idx++] = sz[j++];
+            }
+        }
+
+        while (i <= mid) {
+            tmp[idx++] = sz[i++];
+        }
+
+        while (j <= right) {
+            tmp[idx++] = sz[j++];
+        }
+
+        i = left;
+        idx = 0;
         while (i <= right) {
             sz[i++] = tmp[idx++];
         }
