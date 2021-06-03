@@ -13,9 +13,9 @@ public class TestSort3 {
         System.out.println("排序前: " + Arrays.toString(sz));
         long s = System.currentTimeMillis();
         // 冒泡 选择 插入 希尔 基数 堆
-        dSort2(sz);
+//        dSort2(sz);
         // 快速
-//        kSortL1(sz, 0, sz.length - 1);
+        kSortL2(sz, 0, sz.length - 1);
         // 归并
 //        int temp[] = new int[sz.length];
 //        gSort2(sz, 0, sz.length - 1, temp);
@@ -203,6 +203,13 @@ public class TestSort3 {
         }
     }
 
+    /**
+     * 堆排序2
+     *
+     * @param sz
+     * @param i
+     * @param length
+     */
     public static void dSort2(int[] sz, int i, int length) {
         int tmp = sz[i];
         for (int k = 2 * i + 1; k < length; k = k * 2 + 1) {
@@ -302,6 +309,92 @@ public class TestSort3 {
         if (left < r) {
             kSortL1(sz, left, r);
         }
+    }
+
+    /**
+     * 快速排序1
+     * 中间
+     *
+     * @param sz
+     * @param left
+     * @param right
+     */
+    public static void kSortM2(int[] sz, int left, int right) {
+        int l = left, r = right;
+        int m = sz[l + (r - l) / 2];
+
+        while (l < r) {
+            while (sz[l] < m) {
+                l++;
+            }
+            while (sz[r] > m) {
+                r--;
+            }
+            if (l >= r) {
+                break;
+            }
+            int tmp = sz[l];
+            sz[l] = sz[r];
+            sz[r] = tmp;
+
+            if (sz[l] == m) {
+                r--;
+            }
+            if (sz[r] == m) {
+                l++;
+            }
+        }
+        if (l == r) {
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSortM2(sz, left, r);
+        }
+        if (l < right) {
+            kSortM2(sz, l, right);
+        }
+    }
+
+    /**
+     * 快速排序1
+     * 左边
+     *
+     * @param sz
+     * @param left
+     * @param right
+     */
+    public static void kSortL2(int[] sz, int left, int right) {
+        int l = left, r = right;
+        int m = sz[l];
+        while (l < r) {
+            while (l < r && sz[r] >= m) {
+                r--;
+            }
+            if (l < r) {
+                sz[l] = sz[r];
+                l++;
+            }
+            while (l < r && sz[l] < m) {
+                l++;
+            }
+            if (l < r) {
+                sz[r] = sz[l];
+                r--;
+            }
+        }
+        if (l == r) {
+            sz[l] = m;
+            l++;
+            r--;
+        }
+        if (left < r) {
+            kSortL2(sz, left, r);
+        }
+        if (l < right) {
+            kSortL2(sz, l, right);
+        }
+
     }
 
     /**
